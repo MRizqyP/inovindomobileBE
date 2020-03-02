@@ -11,13 +11,13 @@ app.use(cors());
 const Role = db.role;
 const Book = db.book;
 
-// require("./router/router.js")(app);
+require("./router/router.js")(app);
 // force: true will drop the table if it already exists (comment this part aft
 // er first run, to disable migration)
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and Resync with { force: true }");
-  //   initial();
-});
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and Resync with { force: true }");
+//   //   initial();
+// });
 
 // require("./app/route/project.route.js")(app);
 

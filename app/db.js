@@ -25,9 +25,9 @@ db.user.hasMany(db.artikel, {
   foreignKey: "id_user"
 });
 
-db.artikel.belongsTo(db.user, {
-  foreignKey: "id_user"
-});
+// db.artikel.belongsTo(db.user, {
+//   foreignKey: "id_user"
+// });
 
 db.user.hasMany(db.komentar, {
   foreignKey: "id_user"
