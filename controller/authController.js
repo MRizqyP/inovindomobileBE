@@ -14,8 +14,8 @@ exports.signup = asyncMiddleware(async (req, res) => {
     username: req.body.username,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
-    admin: true,
-    status: true
+    admin: false,
+    status: false
   });
 
   res.status(201).send({
@@ -44,6 +44,12 @@ exports.signin = asyncMiddleware(async (req, res) => {
       accessToken: null,
       reason: "Invalid Password!"
     });
+  } else if (user.status === false) {
+    return res.status(402).send({
+      auth: false,
+      accessToken: null,
+      reason: "User Anda Tidak Aktif"
+    });
   }
   const token = jwt.sign({ id: user.id_user }, config.secret, {
     expiresIn: 86400 // expires in 24 hours
@@ -53,6 +59,7 @@ exports.signin = asyncMiddleware(async (req, res) => {
     type: "Bearer",
     accessToken: token,
     id: user.id_user,
-    status: user.status
+    status: user.status,
+    admin: user.admin
   });
 });

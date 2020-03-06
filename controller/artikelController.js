@@ -2,6 +2,7 @@ const db = require("../app/db.js");
 const User = db.user;
 const Komentar = db.komentar;
 const Artikel = db.artikel;
+// const User = db.user;
 const asyncMiddleware = require("express-async-handler");
 const express = require("express");
 
@@ -10,7 +11,31 @@ app.use(express.json());
 
 exports.showsArtikel = asyncMiddleware(async (req, res) => {
   const artikel = await Artikel.findAll({
-    attributes: ["id_user", "id_artikel", "judul", "isiartikel", "status"]
+    attributes: [
+      "id_user",
+      "id_artikel",
+      "judul",
+      "isiartikel",
+      "status",
+      "createdAt",
+      "img"
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ["id_user", "name", "username"]
+      },
+      {
+        model: Komentar,
+        attributes: ["isikomen"],
+        include: [
+          {
+            model: User,
+            attributes: ["name"]
+          }
+        ]
+      }
+    ]
   });
   res.status(200).json({
     description: "All Artikel",
@@ -19,9 +44,66 @@ exports.showsArtikel = asyncMiddleware(async (req, res) => {
 });
 
 exports.showArtikel = asyncMiddleware(async (req, res) => {
-  const artikel = await Artikel.findOne({
+  const artikel = await Artikel.findAll({
+    where: { id_user: req.params.id },
+    attributes: [
+      "id_artikel",
+      "judul",
+      "isiartikel",
+      "status",
+      "createdAt",
+      "img"
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ["name"]
+      },
+      {
+        model: Komentar,
+        attributes: ["isikomen"],
+        include: [
+          {
+            model: User,
+            attributes: ["name"]
+          }
+        ]
+      }
+    ]
+  });
+  res.status(200).json({
+    description: "Artikel Content Page",
+    artikel: artikel
+  });
+});
+
+exports.showArtikelId = asyncMiddleware(async (req, res) => {
+  const artikel = await Artikel.findAll({
     where: { id_artikel: req.params.id },
-    attributes: ["id_artikel", "judul", "isiartikel", "status"]
+    attributes: [
+      "id_artikel",
+      "judul",
+      "isiartikel",
+      "status",
+      "createdAt",
+      "img"
+    ],
+    include: [
+      {
+        model: User,
+        attributes: ["name"]
+      },
+      {
+        model: Komentar,
+        attributes: ["id_komentar", "isikomen", "status"],
+        include: [
+          {
+            model: User,
+            attributes: ["name", "id_user"]
+          }
+        ]
+      }
+    ]
   });
   res.status(200).json({
     description: "Artikel Content Page",
@@ -32,7 +114,7 @@ exports.showArtikel = asyncMiddleware(async (req, res) => {
 exports.ubahArtikel = asyncMiddleware(async (req, res) => {
   await Artikel.update(
     {
-      status: false
+      status: req.body.status
     },
     { where: { id_artikel: req.params.id } }
   );
@@ -45,8 +127,9 @@ exports.buatArtikel = asyncMiddleware(async (req, res) => {
   await Artikel.create({
     judul: req.body.judul,
     isiartikel: req.body.isi,
-    id_user: req.params.id,
-    status: true
+    id_user: req.body.id,
+    img: req.body.img,
+    status: false
   });
 
   res.status(201).send({
@@ -54,22 +137,9 @@ exports.buatArtikel = asyncMiddleware(async (req, res) => {
   });
 });
 
-exports.managementBoard = asyncMiddleware(async (req, res) => {
-  const user = await User.findOne({
-    where: { id: req.userId },
-    attributes: ["name", "username", "email"],
-    include: [
-      {
-        model: Role,
-        attributes: ["id", "name"],
-        through: {
-          attributes: ["userId", "roleId"]
-        }
-      }
-    ]
-  });
-  res.status(200).json({
-    description: "Management Board",
-    user: user
+exports.hapusArtikel = asyncMiddleware(async (req, res) => {
+  await Artikel.destroy({ where: { id_artikel: req.body.id_artikel } });
+  res.status(201).send({
+    status: "artikel berhasil di delete"
   });
 });

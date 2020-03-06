@@ -4,6 +4,7 @@ module.exports = function(app) {
   const authController = require("../controller/authController.js");
   const userController = require("../controller/userController.js");
   const artikelController = require("../controller/artikelController.js");
+  const komentarController = require("../controller/komentarController");
   //   const orderController = require("../controller/orderController.js");
   //   const {
   //     bookValidationRules,
@@ -39,31 +40,25 @@ module.exports = function(app) {
 
   /*perartikelan*/
   app.post(
-    "/buatartikel/:id",
+    "/buatartikel",
     [authJwt.verifyToken],
     artikelController.buatArtikel
   );
 
-  app.get("/artikel", [authJwt.verifyToken], artikelController.showsArtikel);
+  app.get("/artikel", artikelController.showsArtikel);
   app.get("/artikel/:id", [authJwt.verifyToken], artikelController.showArtikel);
   app.put("/artikel/:id", [authJwt.verifyToken], artikelController.ubahArtikel);
 
-  //   app.post(
-  //     "/books",
-  //     [authJwt.verifyToken, authJwt.isAdmin, bookValidationRules(), validate],
+  app.get("/artikell/:id", artikelController.showArtikelId);
+  app.delete("/artikel", artikelController.hapusArtikel);
 
-  //     bookController.tambahBuku
-  //   );
+  /*perkomenan*/
 
-  //   app.get("/books", [authJwt.verifyToken], bookController.tampilsemuaBuku);
+  app.post("/komentar", komentarController.buatKomentar);
+  app.delete("/komentar", komentarController.hapusKomentar);
+  app.put("/komentar/:id", komentarController.blokKomentar);
 
-  //   app.get("/books/:id", [authJwt.verifyToken], bookController.tampilBuku);
-
-  //   app.put(
-  //     "/books/:id",
-  //     // [authJwt.verifyToken, authJwt.isAdmin],
-  //     bookController.rubahBuku
-  //   );
+  // app.post("/upload", )
 
   //   app.delete(
   //     "/books/:id",

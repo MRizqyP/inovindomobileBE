@@ -8,13 +8,16 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.INTEGER
     },
     isiartikel: {
-      type: Sequelize.STRING
+      type: Sequelize.TEXT
     },
     judul: {
       type: Sequelize.STRING
     },
     status: {
       type: Sequelize.BOOLEAN
+    },
+    img: {
+      type: Sequelize.STRING
     }
   });
   return Artikel;

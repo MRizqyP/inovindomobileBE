@@ -19,8 +19,8 @@ exports.showsArtikel = asyncMiddleware(async (req, res) => {
 });
 
 exports.showComment = asyncMiddleware(async (req, res) => {
-  const artikel = await Artikel.findOne({
-    where: { id: req.params.id },
+  const Komentar = await Komentar.findOne({
+    where: { id_komentar: req.params.id },
     attributes: ["title", "content"],
     include: [
       {
@@ -35,10 +35,10 @@ exports.showComment = asyncMiddleware(async (req, res) => {
   });
 });
 
-exports.ubahKomentar = asyncMiddleware(async (req, res) => {
+exports.blokKomentar = asyncMiddleware(async (req, res) => {
   await Komentar.update(
     {
-      status: false
+      status: req.body.status
     },
     { where: { id_komentar: req.params.id } }
   );
@@ -49,14 +49,20 @@ exports.ubahKomentar = asyncMiddleware(async (req, res) => {
 
 exports.buatKomentar = asyncMiddleware(async (req, res) => {
   await Komentar.create({
-    isikomentar: req.body.judul,
+    isikomen: req.body.isikomentar,
     id_artikel: req.body.id_artikel,
-    id_user: req.params.id_user,
-    status: true
+    id_user: req.body.id_user,
+    status: req.body.status
   });
 
   res.status(201).send({
     status: "Komentar registered successfully!"
+  });
+});
+exports.hapusKomentar = asyncMiddleware(async (req, res) => {
+  await Komentar.destroy({ where: { id_komentar: req.body.id_komentar } });
+  res.status(201).send({
+    status: "Komentar berhasil di delete"
   });
 });
 
