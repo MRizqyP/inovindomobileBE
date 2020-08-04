@@ -16,14 +16,14 @@ app.use(express.static("./public/uploads/"));
 
 // force: true will drop the table if it already exists (comment this part aft
 // er first run, to disable migration)
-// db.sequelize.sync({ force: true }).then(() => {
-//   console.log("Drop and Resync with { force: true }");
-//   //   initial();
-// });
+db.sequelize.sync({ force: true }).then(() => {
+  console.log("Drop and Resync with { force: true }");
+  // book();
+});
 
 // require("./app/route/project.route.js")(app);
 
-app.post("/upload", function(req, res) {
+app.post("/upload", function (req, res) {
   if (!req.files || Object.keys(req.files).length === 0) {
     return res.status(400).send("No files were uploaded.");
   }
@@ -31,19 +31,19 @@ app.post("/upload", function(req, res) {
   let sampleFile = req.files.file;
 
   let file_name = Date.now() + "_" + sampleFile.name;
-  sampleFile.mv(`./public/uploads/${file_name}`, function(err) {
+  sampleFile.mv(`./public/uploads/${file_name}`, function (err) {
     if (err) return res.status(500).send(err);
     res.status(200).send({
       status: "File uploaded!",
       title: req.body.title,
-      url: file_name
+      url: file_name,
     });
   });
 });
 require("./router/router.js")(app);
 
 // Create a Server
-var server = app.listen(8085, "127.0.0.1", function() {
+var server = app.listen(8085, "127.0.0.1", function () {
   var host = server.address().address;
   var port = server.address().port;
   console.log("App listening at http://%s:%s", host, port);
@@ -52,15 +52,15 @@ var server = app.listen(8085, "127.0.0.1", function() {
 // function initial() {
 //   Role.create({
 //     id: 1,
-//     name: "USER"
+//     name: "USER",
 //   });
 //   Role.create({
 //     id: 2,
-//     name: "ADMIN"
+//     name: "ADMIN",
 //   });
 //   Role.create({
 //     id: 3,
-//     name: "PM"
+//     name: "PM",
 //   });
 // }
 // function book() {
@@ -70,6 +70,6 @@ var server = app.listen(8085, "127.0.0.1", function() {
 //     published_date: "ea",
 //     pages: "21",
 //     language: "inggris",
-//     published_id: "12"
+//     published_id: "12",
 //   });
 // }
