@@ -1,18 +1,15 @@
 //Mendifinisikan Sequelize Model
 module.exports = (sequelize, Sequelize) => {
-  const Komentar = sequelize.define("komentars", {
-    id_komentar: {
+  const Order = sequelize.define("Orders", {
+    id_order: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
-      type: Sequelize.INTEGER
+      type: Sequelize.INTEGER,
     },
-    isikomen: {
-      type: Sequelize.STRING
+    status_Order: {
+      type: Sequelize.STRING,
     },
-    status: {
-      type: Sequelize.BOOLEAN
-    }
   });
   return Komentar;
 };
