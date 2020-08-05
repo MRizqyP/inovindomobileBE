@@ -1,5 +1,5 @@
 const env = {
-  database: "blogger",
+  database: "inovindo",
   username: "root",
   password: "",
   host: "localhost",

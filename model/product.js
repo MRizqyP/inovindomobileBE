@@ -16,9 +16,12 @@ module.exports = (sequelize, Sequelize) => {
     desc_product: {
       type: Sequelize.STRING,
     },
+    harga_perpanjang: {
+      type: Sequelize.INTEGER,
+    },
     status: {
       type: Sequelize.BOOLEAN,
     },
   });
-  return Komentar;
+  return Product;
 };

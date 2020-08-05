@@ -7,9 +7,6 @@ module.exports = (sequelize, Sequelize) => {
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    nm_lengkap: {
-      type: Sequelize.STRING,
-    },
     first_name: {
       type: Sequelize.STRING,
     },

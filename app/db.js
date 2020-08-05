@@ -10,39 +10,38 @@ const sequelize = new Sequelize(env.database, env.username, env.password, {
     max: env.max,
     min: env.pool.min,
     acquire: env.pool.acquire,
-    idle: env.pool.idle
-  }
+    idle: env.pool.idle,
+  },
 });
 const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = require("../model/user.js")(sequelize, Sequelize);
-db.komentar = require("../model/komentar.js")(sequelize, Sequelize);
+db.catergory = require("../model/category.js")(sequelize, Sequelize);
+db.company = require("../model/company.js")(sequelize, Sequelize);
+db.detailorder = require("../model/detailorder.js")(sequelize, Sequelize);
+db.order = require("../model/order.js")(sequelize, Sequelize);
+db.product = require("../model/product.js")(sequelize, Sequelize);
+db.admin = require("../model/admin.js")(sequelize, Sequelize);
 
-db.artikel = require("../model/artikel.js")(sequelize, Sequelize);
-
-db.user.hasMany(db.artikel, {
-  foreignKey: "id_user"
+db.user.hasMany(db.order, {
+  foreignKey: "id_user",
 });
 
-db.user.hasMany(db.komentar, {
-  foreignKey: "id_user"
+db.order.hasMany(db.detailorder, {
+  foreignKey: "id_order",
 });
 
-db.artikel.hasMany(db.komentar, {
-  foreignKey: "id_artikel"
+db.product.hasMany(db.detailorder, {
+  foreignKey: "id_product",
 });
 
-db.artikel.belongsTo(db.user, {
-  foreignKey: "id_user"
+db.catergory.hasMany(db.product, {
+  foreignKey: "id_category",
 });
 
-db.komentar.belongsTo(db.user, {
-  foreignKey: "id_user"
-});
-
-db.komentar.belongsTo(db.artikel, {
-  foreignKey: "id_artikel"
+db.order.belongsTo(db.user, {
+  foreignKey: "id_user",
 });
 
 // db.role.belongsToMany(db.user, {

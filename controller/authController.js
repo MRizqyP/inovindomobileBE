@@ -10,16 +10,16 @@ var bcrypt = require("bcryptjs");
 
 exports.signup = asyncMiddleware(async (req, res) => {
   await User.create({
-    name: req.body.name,
-    username: req.body.username,
+    first_name: req.body.first_name,
+    last_name: req.body.last_name,
     email: req.body.email,
     password: bcrypt.hashSync(req.body.password, 8),
     admin: false,
-    status: false
+    status: true,
   });
 
   res.status(201).send({
-    status: "User registered successfully!"
+    status: "User registered successfully!",
   });
 });
 
@@ -27,14 +27,14 @@ exports.signin = asyncMiddleware(async (req, res) => {
   console.log("Sign-In");
   const user = await User.findOne({
     where: {
-      username: req.body.username
-    }
+      email: req.body.email,
+    },
   });
   if (!user) {
     return res.status(404).send({
       auth: false,
       accessToken: null,
-      reason: "User Not Found!"
+      reason: "User Not Found!",
     });
   }
   const passwordIsValid = bcrypt.compareSync(req.body.password, user.password);
@@ -42,17 +42,17 @@ exports.signin = asyncMiddleware(async (req, res) => {
     return res.status(401).send({
       auth: false,
       accessToken: null,
-      reason: "Invalid Password!"
+      reason: "Invalid Password!",
     });
   } else if (user.status === false) {
     return res.status(402).send({
       auth: false,
       accessToken: null,
-      reason: "User Anda Tidak Aktif"
+      reason: "User Anda Tidak Aktif",
     });
   }
   const token = jwt.sign({ id: user.id_user }, config.secret, {
-    expiresIn: 86400 // expires in 24 hours
+    expiresIn: 86400, // expires in 24 hours
   });
   res.status(200).send({
     auth: true,
@@ -60,6 +60,6 @@ exports.signin = asyncMiddleware(async (req, res) => {
     accessToken: token,
     id: user.id_user,
     status: user.status,
-    admin: user.admin
+    admin: user.admin,
   });
 });

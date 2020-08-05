@@ -20,5 +20,5 @@ module.exports = (sequelize, Sequelize) => {
       type: Sequelize.BOOLEAN,
     },
   });
-  return Komentar;
+  return Company;
 };

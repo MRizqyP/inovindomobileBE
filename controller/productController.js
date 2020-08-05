@@ -1,45 +1,62 @@
 const db = require("../app/db.js");
 const User = db.user;
-const Komentar = db.komentar;
-const Artikel = db.artikel;
-// const User = db.user;
+const Product = db.product;
+const DetailOrder = db.detailorder;
+const Category = db.catergory;
+
 const asyncMiddleware = require("express-async-handler");
 const express = require("express");
 
 var app = express();
 app.use(express.json());
 
-exports.showsArtikel = asyncMiddleware(async (req, res) => {
-  const artikel = await Artikel.findAll({
+exports.enterProduct = asyncMiddleware(async (req, res) => {
+  await Product.create({
+    nama_product: req.body.nama_product,
+    harga: req.body.harga,
+    desc_product: req.body.desc_product,
+    status: false,
+  });
+
+  res.status(201).send({
+    status: "Product registered successfully!",
+  });
+});
+
+exports.showsProduk = asyncMiddleware(async (req, res) => {
+  const product = await Product.findAll({
     attributes: [
-      "id_user",
-      "id_artikel",
-      "judul",
-      "isiartikel",
+      "id_product",
+      "nama_product",
+      "harga",
+      "desc_product",
       "status",
       "createdAt",
-      "img",
-    ],
-    include: [
-      {
-        model: User,
-        attributes: ["id_user", "name", "username"],
-      },
-      {
-        model: Komentar,
-        attributes: ["isikomen"],
-        include: [
-          {
-            model: User,
-            attributes: ["name"],
-          },
-        ],
-      },
+      "updatedAt",
     ],
   });
   res.status(200).json({
-    description: "All Artikel",
-    artikel: artikel,
+    description: "All product",
+    product: product,
+  });
+});
+
+exports.showProduk = asyncMiddleware(async (req, res) => {
+  const product = await Product.findAll({
+    where: { id_product: req.params.id },
+    attributes: [
+      "id_product",
+      "nama_product",
+      "harga",
+      "desc_product",
+      "status",
+      "createdAt",
+      "updatedAt",
+    ],
+  });
+  res.status(200).json({
+    description: "Product By Id",
+    product: product,
   });
 });
 
@@ -120,19 +137,6 @@ exports.ubahArtikel = asyncMiddleware(async (req, res) => {
   );
   res.status(201).send({
     status: "Artikel berhasil di block",
-  });
-});
-
-exports.buatArtikel = asyncMiddleware(async (req, res) => {
-  await Artikel.create({
-    judul: req.body.judul,
-    isiartikel: req.body.isi,
-    id_user: req.body.id,
-    img: req.body.img,
-    status: false,
-  });
-  res.status(201).send({
-    status: "Artikel registered successfully!",
   });
 });
 
