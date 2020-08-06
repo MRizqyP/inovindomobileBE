@@ -17,15 +17,27 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = require("../model/user.js")(sequelize, Sequelize);
-db.catergory = require("../model/category.js")(sequelize, Sequelize);
+
 db.company = require("../model/company.js")(sequelize, Sequelize);
 db.detailorder = require("../model/detailorder.js")(sequelize, Sequelize);
 db.order = require("../model/order.js")(sequelize, Sequelize);
 db.product = require("../model/product.js")(sequelize, Sequelize);
 db.admin = require("../model/admin.js")(sequelize, Sequelize);
+db.maintenence = require("../model/maintenence.js")(sequelize, Sequelize);
+db.perpanjangan = require("../model/perpanjangan.js")(sequelize, Sequelize);
+db.tiket_gangguan = require("../model/tiket_gangguan.js")(sequelize, Sequelize);
+db.payment = require("../model/payment.js")(sequelize, Sequelize);
 
 db.user.hasMany(db.order, {
   foreignKey: "id_user",
+});
+
+db.user.hasMany(db.payment, {
+  foreignKey: "id_user",
+});
+
+db.product.hasMany(db.order, {
+  foreignKey: "id_product",
 });
 
 db.order.hasMany(db.detailorder, {
@@ -36,12 +48,48 @@ db.product.hasMany(db.detailorder, {
   foreignKey: "id_product",
 });
 
-db.catergory.hasMany(db.product, {
-  foreignKey: "id_category",
+db.maintenence.hasMany(db.detailorder, {
+  foreignKey: "id_maintenence",
+});
+
+db.perpanjangan.hasMany(db.detailorder, {
+  foreignKey: "id_perpanjangan",
+});
+
+db.tiket_gangguan.hasMany(db.detailorder, {
+  foreignKey: "id_tiket",
+});
+
+db.payment.belongsTo(db.user, {
+  foreignKey: "id_user",
 });
 
 db.order.belongsTo(db.user, {
   foreignKey: "id_user",
+});
+
+db.order.belongsTo(db.product, {
+  foreignKey: "id_product",
+});
+
+db.detailorder.belongsTo(db.order, {
+  foreignKey: "id_order",
+});
+
+db.detailorder.belongsTo(db.product, {
+  foreignKey: "id_product",
+});
+
+db.detailorder.belongsTo(db.maintenence, {
+  foreignKey: "id_maintenence",
+});
+
+db.detailorder.belongsTo(db.perpanjangan, {
+  foreignKey: "id_perpanjangan",
+});
+
+db.detailorder.belongsTo(db.tiket_gangguan, {
+  foreignKey: "id_tiket",
 });
 
 // db.role.belongsToMany(db.user, {

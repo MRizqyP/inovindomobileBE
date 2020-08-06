@@ -3,11 +3,11 @@ module.exports = function (app) {
   const authJwt = require("./verifyJwtToken");
   const authController = require("../controller/authController.js");
   const userController = require("../controller/userController.js");
-  const artikelController = require("../controller/artikelController.js");
-  const komentarController = require("../controller/komentarController");
+  const detailController = require("../controller/detailController.js");
   const productController = require("../controller/productController");
   const orderController = require("../controller/orderController");
-  //   const orderController = require("../controller/orderController.js");
+  const tiketController = require("../controller/tiketController");
+
   //   const {
   //     bookValidationRules,
   //     userValidationRules,
@@ -21,12 +21,10 @@ module.exports = function (app) {
   /* LOGIN & REGISTER */
   app.post(
     "/register",
-    // [
-    //   userValidationRules(),
-    //   validate,
-    //   verifySignUp.checkDuplicateUserNameOrEmail,
-    //   verifySignUp.checkRolesExisted
-    // ],
+    [
+      verifySignUp.checkDuplicateUserNameOrEmail,
+      verifySignUp.checkRolesExisted,
+    ],
     authController.signup
   );
   app.post("/login", authController.signin);
@@ -50,13 +48,24 @@ module.exports = function (app) {
   app.get("/order", orderController.showsOrder);
   /*Order*/
 
-  app.delete("/artikel", artikelController.hapusArtikel);
+  /*Detail Order */
+  app.post(
+    "/transaksi",
+    [authJwt.verifyToken],
+    detailController.entertranksaksi
+  );
+  app.get(
+    "/transaksi/:id",
+    [authJwt.verifyToken],
+    detailController.showTransaksi
+  );
+  app.get("/transaksi", detailController.showsTransaksi);
 
-  /*perkomenan*/
+  /*Detail Tiket */
+  app.post("/tiket", [authJwt.verifyToken], tiketController.enterTiket);
+  app.get("/tiket/:id", [authJwt.verifyToken], tiketController.showTiket);
 
-  app.post("/komentar", komentarController.buatKomentar);
-  app.delete("/komentar", komentarController.hapusKomentar);
-  app.put("/komentar/:id", komentarController.blokKomentar);
+  /*Detail Tiket */
 
   // app.post("/upload", )
 

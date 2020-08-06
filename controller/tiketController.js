@@ -1,7 +1,8 @@
 const db = require("../app/db.js");
 const User = db.user;
 const Product = db.product;
-const Order = db.order;
+const DetailOrder = db.detailorder;
+const Tiket = db.tiket_gangguan;
 
 const asyncMiddleware = require("express-async-handler");
 const express = require("express");
@@ -9,43 +10,31 @@ const express = require("express");
 var app = express();
 app.use(express.json());
 
-exports.enterOrder = asyncMiddleware(async (req, res) => {
-  await Order.create({
-    status_Order: false,
-    id_user: req.body.id_user,
-    id_product: req.body.id_product,
+exports.enterTiket = asyncMiddleware(async (req, res) => {
+  await Tiket.create({
+    status_tiket: req.body.status_tiket,
+    desc_tiket: req.body.desc_tiket,
   });
 
   res.status(201).send({
-    status: "Order registered successfully!",
+    status: "Tiket registered successfully!",
   });
 });
 
-exports.showOrder = asyncMiddleware(async (req, res) => {
-  const order = await Order.findAll({
-    where: { id_order: req.params.id },
-    attributes: ["id_order", "status_Order", "id_product", "createdAt"],
+exports.showTiket = asyncMiddleware(async (req, res) => {
+  const tiket = await Tiket.findAll({
+    where: { id_tiket: req.params.id },
+    attributes: ["id_tiket", "status_tiket", "desc_tiket", "createdAt"],
     include: [
       {
-        model: User,
-        attributes: ["first_name", "last_name", "email", "status"],
-      },
-      {
-        model: Product,
-        attributes: [
-          "id_product",
-          "nama_product",
-          "harga",
-          "desc_product",
-          "status",
-          "harga_perpanjang",
-        ],
+        model: DetailOrder,
+        attributes: ["id_detailorder"],
       },
     ],
   });
   res.status(200).json({
-    description: "Show Order By Id",
-    order: order,
+    description: "Show Tiket By Id",
+    Tiket: tiket,
   });
 });
 

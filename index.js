@@ -16,11 +16,10 @@ app.use(express.static("./public/uploads/"));
 
 // force: true will drop the table if it already exists (comment this part aft
 // er first run, to disable migration)
-db.sequelize.sync({ force: true }).then(() => {
-  console.log("Drop and Resync with { force: true }");
-  // book();
-});
-
+// db.sequelize.sync({ force: true }).then(() => {
+//   console.log("Drop and Resync with { force: true }");
+//   // book();
+// });
 // require("./app/route/project.route.js")(app);
 
 app.post("/upload", function (req, res) {
@@ -48,28 +47,3 @@ var server = app.listen(8085, "127.0.0.1", function () {
   var port = server.address().port;
   console.log("App listening at http://%s:%s", host, port);
 });
-
-// function initial() {
-//   Role.create({
-//     id: 1,
-//     name: "USER",
-//   });
-//   Role.create({
-//     id: 2,
-//     name: "ADMIN",
-//   });
-//   Role.create({
-//     id: 3,
-//     name: "PM",
-//   });
-// }
-// function book() {
-//   Book.create({
-//     title: "Sikancil",
-//     author: "Kinyot",
-//     published_date: "ea",
-//     pages: "21",
-//     language: "inggris",
-//     published_id: "12",
-//   });
-// }

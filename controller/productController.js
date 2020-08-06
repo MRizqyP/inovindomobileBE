@@ -15,6 +15,7 @@ exports.enterProduct = asyncMiddleware(async (req, res) => {
     nama_product: req.body.nama_product,
     harga: req.body.harga,
     desc_product: req.body.desc_product,
+    harga_perpanjang: req.body.harga_perpanjang,
     status: false,
   });
 
@@ -29,6 +30,7 @@ exports.showsProduk = asyncMiddleware(async (req, res) => {
       "id_product",
       "nama_product",
       "harga",
+      "harga_perpanjang",
       "desc_product",
       "status",
       "createdAt",
@@ -48,6 +50,7 @@ exports.showProduk = asyncMiddleware(async (req, res) => {
       "id_product",
       "nama_product",
       "harga",
+      "harga_perpanjang",
       "desc_product",
       "status",
       "createdAt",

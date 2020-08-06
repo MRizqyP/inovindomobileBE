@@ -2,7 +2,6 @@ const db = require("../app/db.js");
 const User = db.user;
 const Komentar = db.komentar;
 const Artikel = db.artikel;
-// const User = db.user;
 const asyncMiddleware = require("express-async-handler");
 const express = require("express");
 

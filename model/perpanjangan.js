@@ -1,18 +1,18 @@
 //Mendifinisikan Sequelize Model
 module.exports = (sequelize, Sequelize) => {
-  const Category = sequelize.define("Categories", {
-    id_category: {
+  const Perpanjangan = sequelize.define("Perpanjangan", {
+    id_perpanjangan: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    nama_category: {
+    status_perpanjangan: {
       type: Sequelize.STRING,
     },
-    status: {
-      type: Sequelize.BOOLEAN,
+    desc_perpanjangan: {
+      type: Sequelize.STRING,
     },
   });
-  return Category;
+  return Perpanjangan;
 };
