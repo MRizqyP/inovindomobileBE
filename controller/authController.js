@@ -20,6 +20,7 @@ exports.signup = asyncMiddleware(async (req, res) => {
 
   res.status(201).send({
     status: "User registered successfully!",
+    success: true,
   });
 });
 

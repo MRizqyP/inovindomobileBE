@@ -21,10 +21,7 @@ module.exports = function (app) {
   /* LOGIN & REGISTER */
   app.post(
     "/register",
-    [
-      verifySignUp.checkDuplicateUserNameOrEmail,
-      verifySignUp.checkRolesExisted,
-    ],
+    [verifySignUp.checkDuplicateUserNameOrEmail],
     authController.signup
   );
   app.post("/login", authController.signin);
