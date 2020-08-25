@@ -17,7 +17,6 @@ const db = {};
 db.Sequelize = Sequelize;
 db.sequelize = sequelize;
 db.user = require("../model/user.js")(sequelize, Sequelize);
-
 db.company = require("../model/company.js")(sequelize, Sequelize);
 db.detailorder = require("../model/detailorder.js")(sequelize, Sequelize);
 db.order = require("../model/order.js")(sequelize, Sequelize);
@@ -27,6 +26,11 @@ db.maintenence = require("../model/maintenence.js")(sequelize, Sequelize);
 db.perpanjangan = require("../model/perpanjangan.js")(sequelize, Sequelize);
 db.tiket_gangguan = require("../model/tiket_gangguan.js")(sequelize, Sequelize);
 db.payment = require("../model/payment.js")(sequelize, Sequelize);
+db.category = require("../model/category.js")(sequelize, Sequelize);
+db.desc_category = require("../model/desc_category.js")(sequelize, Sequelize);
+db.promo = require("../model/promo.js")(sequelize, Sequelize);
+db.layanan = require("../model/layanan.js")(sequelize, Sequelize);
+db.testimoni = require("../model/testimoni.js")(sequelize, Sequelize);
 
 db.user.hasMany(db.order, {
   foreignKey: "id_user",
@@ -60,8 +64,16 @@ db.tiket_gangguan.hasMany(db.detailorder, {
   foreignKey: "id_tiket",
 });
 
+db.category.hasMany(db.desc_category, {
+  foreignKey: "id_category",
+});
+
 db.payment.belongsTo(db.user, {
   foreignKey: "id_user",
+});
+
+db.desc_category.belongsTo(db.category, {
+  foreignKey: "id_category",
 });
 
 db.order.belongsTo(db.user, {

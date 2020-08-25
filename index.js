@@ -31,7 +31,7 @@ app.post("/upload", function (req, res) {
 
   let file_name = Date.now() + "_" + sampleFile.name;
   sampleFile.mv(`./public/uploads/${file_name}`, function (err) {
-    if (err) return res.status(500).send(err);
+    if (err) return res.status(501).send(err);
     res.status(200).send({
       status: "File uploaded!",
       title: req.body.title,
@@ -39,9 +39,9 @@ app.post("/upload", function (req, res) {
     });
   });
 });
+
 require("./router/router.js")(app);
 
-// Create a Server
 var server = app.listen(8085, "127.0.0.1", function () {
   var host = server.address().address;
   var port = server.address().port;

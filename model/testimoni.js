@@ -1,42 +1,30 @@
 //Mendifinisikan Sequelize Model
 module.exports = (sequelize, Sequelize) => {
-  const User = sequelize.define("users", {
-    id_user: {
+  const Testimoni = sequelize.define("testimoni", {
+    id_testimoni: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    first_name: {
+    nama_testimoni: {
       type: Sequelize.STRING,
     },
-    last_name: {
+    desc_testimoni: {
       type: Sequelize.STRING,
     },
-    email: {
+    asal_testimoni: {
       type: Sequelize.STRING,
     },
-    password: {
+    pekerjaan_testimoni: {
       type: Sequelize.STRING,
-    },
-    img: {
-      type: Sequelize.STRING,
-    },
-    tanggal_lahir: {
-      type: Sequelize.DATE,
-    },
-    kota: {
-      type: Sequelize.STRING,
-    },
-    negara: {
-      type: Sequelize.STRING,
-    },
-    admin: {
-      type: Sequelize.BOOLEAN,
     },
     status: {
       type: Sequelize.BOOLEAN,
     },
+    img: {
+      type: Sequelize.STRING,
+    },
   });
-  return User;
+  return Testimoni;
 };

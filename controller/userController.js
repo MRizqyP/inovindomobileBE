@@ -18,6 +18,7 @@ exports.users = asyncMiddleware(async (req, res) => {
       "admin",
       "createdAt",
       "updatedAt",
+      "img",
     ],
   });
   res.status(200).json({
@@ -38,6 +39,7 @@ exports.userContent = asyncMiddleware(async (req, res) => {
       "admin",
       "createdAt",
       "updatedAt",
+      "img",
     ],
   });
   res.status(200).json({
@@ -55,5 +57,26 @@ exports.blockUser = asyncMiddleware(async (req, res) => {
   );
   res.status(201).send({
     status: "User berhasil di block",
+  });
+});
+exports.ubahUser = asyncMiddleware(async (req, res) => {
+  await User.update(
+    {
+      first_name: req.body.first_name,
+      last_name: req.body.last_name,
+      email: req.body.email,
+      img: req.body.img,
+    },
+    { where: { id_user: req.params.id } }
+  );
+  res.status(201).send({
+    status: "User berhasil di Ubah",
+  });
+});
+
+exports.deleteUser = asyncMiddleware(async (req, res) => {
+  await User.destroy({ where: { id_user: req.params.id } });
+  res.status(201).send({
+    status: "User berhasil di delete",
   });
 });
