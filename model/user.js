@@ -25,12 +25,18 @@ module.exports = (sequelize, Sequelize) => {
     tanggal_lahir: {
       type: Sequelize.DATE,
     },
-    kota: {
-      type: Sequelize.STRING,
-    },
-    negara: {
-      type: Sequelize.STRING,
-    },
+    // kota: {
+    //   type: Sequelize.STRING,
+    // },
+    // negara: {
+    //   type: Sequelize.STRING,
+    // },
+    // no_hp: {
+    //   type: Sequelize.INTEGER,
+    // },
+    // provider: {
+    //   type: Sequelize.STRING,
+    // },
     admin: {
       type: Sequelize.BOOLEAN,
     },

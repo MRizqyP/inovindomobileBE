@@ -37,7 +37,7 @@ module.exports = function (app) {
   app.get("/api/users", userController.users);
   app.get("/api/user/:id", userController.userContent);
   app.put("/blockuser/:id", [authJwt.verifyToken], userController.blockUser);
-  app.delete("/api/user/:id", [authJwt.verifyToken], userController.deleteUser);
+  app.delete("/api/user/:id", userController.deleteUser);
   app.put("/user/:id", userController.ubahUser);
   /* Peruseran */
 
@@ -87,6 +87,8 @@ module.exports = function (app) {
   app.post("/desccategory", desccategoryController.buatDescCategory);
   app.get("/desccategory/:id", desccategoryController.showDescCategory);
   app.get("/desccategory", desccategoryController.showsDescCategory);
+
+  app.delete("/desccategory/:id", desccategoryController.hapusDescCategory);
 
   /* Promo */
   app.post("/promo", promoController.buatPromo);

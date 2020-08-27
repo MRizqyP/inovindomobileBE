@@ -68,8 +68,8 @@ exports.ubahDescCategory = asyncMiddleware(async (req, res) => {
 });
 
 exports.hapusDescCategory = asyncMiddleware(async (req, res) => {
-  await Category.destroy({
-    where: { id_desc_category: req.body.id_desc_category },
+  await Desc_Category.destroy({
+    where: { id_desc_category: req.params.id },
   });
   res.status(201).send({
     status: "Desc Category berhasil di delete",
