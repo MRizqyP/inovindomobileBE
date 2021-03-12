@@ -16,6 +16,7 @@ exports.signup = asyncMiddleware(async (req, res) => {
     img: req.body.img,
     // kota: req.body.kota,
     // negara: req.body.negara,
+    provider: req.body.provider,
     password: bcrypt.hashSync(req.body.password, 8),
     admin: false,
     status: true,
@@ -65,5 +66,8 @@ exports.signin = asyncMiddleware(async (req, res) => {
     id: user.id_user,
     status: user.status,
     admin: user.admin,
+    email: user.email,
+    first_name: user.first_name,
+    last_name: user.last_name,
   });
 });

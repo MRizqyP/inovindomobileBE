@@ -1,27 +1,21 @@
 //Mendifinisikan Sequelize Model
 module.exports = (sequelize, Sequelize) => {
-  const Category = sequelize.define("categories", {
-    id_category: {
+  const Pertanyaan = sequelize.define("pertanyaan", {
+    id_pertanyaan: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    nama_category: {
+    pertanyaan: {
       type: Sequelize.STRING,
     },
-    img: {
-      type: Sequelize.STRING,
+    jawaban_pertanyaan: {
+      type: Sequelize.TEXT,
     },
     status: {
       type: Sequelize.BOOLEAN,
     },
-    harga: {
-      type: Sequelize.INTEGER,
-    },
-    harga_perpanjangan: {
-      type: Sequelize.INTEGER,
-    },
   });
-  return Category;
+  return Pertanyaan;
 };

@@ -1,27 +1,21 @@
 //Mendifinisikan Sequelize Model
 module.exports = (sequelize, Sequelize) => {
-  const Order = sequelize.define("Orders", {
-    id_order: {
+  const Slider = sequelize.define("sliders", {
+    id_slider: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
       type: Sequelize.INTEGER,
     },
-    order_razor: {
+    title: {
       type: Sequelize.STRING,
     },
-    nama_domain: {
+    caption: {
       type: Sequelize.STRING,
     },
-    referensi_web: {
-      type: Sequelize.STRING,
-    },
-    theme_color: {
-      type: Sequelize.STRING,
-    },
-    status_Order: {
+    url: {
       type: Sequelize.STRING,
     },
   });
-  return Order;
+  return Slider;
 };

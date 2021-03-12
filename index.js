@@ -5,6 +5,8 @@ var morgan = require("morgan");
 var bodyParser = require("body-parser");
 const fileUpload = require("express-fileupload");
 const cors = require("cors");
+const multer = require("multer");
+const path = require("path");
 app.use(bodyParser.json());
 app.use(morgan("common"));
 const db = require("./app/db.js");
@@ -13,6 +15,7 @@ const Role = db.role;
 const Book = db.book;
 app.use(fileUpload());
 app.use(express.static("./public/uploads/"));
+const stripe = require("stripe")("sk_test_06vNOGLwyUvSeGL5za8duAwv00MUWTUPol");
 
 // force: true will drop the table if it already exists (comment this part aft
 // er first run, to disable migration)
@@ -20,6 +23,12 @@ app.use(express.static("./public/uploads/"));
 //   console.log("Drop and Resync with { force: true }");
 //   // book();
 // });
+// db.sequelize
+//   .query("SET FOREIGN_KEY_CHECKS = 0", { raw: true })
+//   .then(function (results) {
+//     db.sequelize.sync({ force: true });
+//   });
+
 // require("./app/route/project.route.js")(app);
 
 app.post("/upload", function (req, res) {

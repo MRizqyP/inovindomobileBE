@@ -16,7 +16,6 @@ module.exports = function (app) {
   const pertanyaanController = require("../controller/pertanyaanController");
   const descpromoController = require("../controller/desc_promoController");
   const sliderController = require("../controller/sliderController");
-  const maintenenceController = require("../controller/maintenenceController");
 
   //   const {
   //     bookValidationRules,
@@ -148,13 +147,6 @@ module.exports = function (app) {
   app.get("/slider", sliderController.showsSlider);
   app.delete("/slider/:id", sliderController.hapusSlider);
   app.put("/slider/:id", sliderController.ubahSlider);
-
-  /*Maintenence */
-  app.post("/maintenence", maintenenceController.buatMaintenence);
-  app.get("/maintenence/:id", maintenenceController.showMaintenence);
-  app.get("/maintenence", maintenenceController.showsMaintenence);
-  app.delete("/maintenence/:id", maintenenceController.hapusMaintenence);
-  app.put("/maintenence/:id", maintenenceController.ubahMaintenence);
 
   // error handler 404
   app.use(function (req, res, next) {

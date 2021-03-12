@@ -1,7 +1,7 @@
 //Mendifinisikan Sequelize Model
 module.exports = (sequelize, Sequelize) => {
-  const Category = sequelize.define("categories", {
-    id_category: {
+  const Category_Pertanyaan = sequelize.define("categories_pertanyaan", {
+    id_categorypertanyaan: {
       allowNull: false,
       autoIncrement: true,
       primaryKey: true,
@@ -10,18 +10,9 @@ module.exports = (sequelize, Sequelize) => {
     nama_category: {
       type: Sequelize.STRING,
     },
-    img: {
-      type: Sequelize.STRING,
-    },
     status: {
       type: Sequelize.BOOLEAN,
     },
-    harga: {
-      type: Sequelize.INTEGER,
-    },
-    harga_perpanjangan: {
-      type: Sequelize.INTEGER,
-    },
   });
-  return Category;
+  return Category_Pertanyaan;
 };

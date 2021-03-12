@@ -1,6 +1,7 @@
 const db = require("../app/db.js");
 const Promo = db.promo;
-const Desc_Category = db.desc_category;
+const Desc_Promo = db.desc_promo;
+const Category = db.category;
 const asyncMiddleware = require("express-async-handler");
 const express = require("express");
 
@@ -12,6 +13,7 @@ exports.buatPromo = asyncMiddleware(async (req, res) => {
     nama_promo: req.body.nama_promo,
     harga_promo: req.body.harga_promo,
     img: req.body.img,
+    id_category: req.body.id_category,
     status: true,
   });
   res.status(201).send({
@@ -28,6 +30,24 @@ exports.showsPromo = asyncMiddleware(async (req, res) => {
       "img",
       "status",
       "createdAt",
+    ],
+    include: [
+      {
+        model: Desc_Promo,
+        attributes: ["id_desc_promo", "desc_promo", "createdAt"],
+      },
+      {
+        model: Category,
+        attributes: [
+          "id_category",
+          "nama_category",
+          "img",
+          "harga",
+          "status",
+          "createdAt",
+          "harga_perpanjangan",
+        ],
+      },
     ],
   });
   res.status(200).json({
@@ -46,6 +66,24 @@ exports.showPromo = asyncMiddleware(async (req, res) => {
       "img",
       "status",
       "createdAt",
+    ],
+    include: [
+      {
+        model: Desc_Promo,
+        attributes: ["id_desc_promo", "desc_promo", "createdAt"],
+      },
+      {
+        model: Category,
+        attributes: [
+          "id_category",
+          "nama_category",
+          "img",
+          "harga",
+          "status",
+          "createdAt",
+          "harga_perpanjangan",
+        ],
+      },
     ],
   });
   res.status(200).json({

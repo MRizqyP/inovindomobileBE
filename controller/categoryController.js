@@ -1,6 +1,7 @@
 const db = require("../app/db.js");
 const Category = db.category;
 const Desc_Category = db.desc_category;
+const Promo = db.promo;
 const asyncMiddleware = require("express-async-handler");
 const express = require("express");
 
@@ -12,6 +13,8 @@ exports.buatCategory = asyncMiddleware(async (req, res) => {
     nama_category: req.body.nama_category,
     img: req.body.img,
     harga: req.body.harga,
+    harga_perpanjangan: req.body.harga_perpanjangan,
+    id_promo: req.body.id_promo,
     status: true,
   });
   res.status(201).send({
@@ -28,11 +31,16 @@ exports.showsCategory = asyncMiddleware(async (req, res) => {
       "harga",
       "status",
       "createdAt",
+      "harga_perpanjangan",
     ],
     include: [
       {
         model: Desc_Category,
         attributes: ["id_desc_category", "desc_category", "createdAt"],
+      },
+      {
+        model: Promo,
+        attributes: ["id_promo", "nama_promo", "harga_promo", "img", "status"],
       },
     ],
   });
@@ -52,11 +60,16 @@ exports.showCategory = asyncMiddleware(async (req, res) => {
       "img",
       "status",
       "createdAt",
+      "harga_perpanjangan",
     ],
     include: [
       {
         model: Desc_Category,
         attributes: ["id_desc_category", "desc_category", "createdAt"],
+      },
+      {
+        model: Promo,
+        attributes: ["id_promo", "nama_promo", "harga_promo", "img", "status"],
       },
     ],
   });
@@ -73,6 +86,8 @@ exports.ubahCategory = asyncMiddleware(async (req, res) => {
       nama_category: req.body.nama_category,
       harga: req.body.harga,
       img: req.body.img,
+      harga_perpanjangan: req.body.harga_perpanjangan,
+      id_promo: req.body.id_promo,
     },
     { where: { id_category: req.params.id } }
   );
@@ -82,7 +97,7 @@ exports.ubahCategory = asyncMiddleware(async (req, res) => {
 });
 
 exports.hapusCategory = asyncMiddleware(async (req, res) => {
-  await Category.destroy({ where: { id_category: req.body.id_category } });
+  await Category.destroy({ where: { id_category: req.params.id } });
   res.status(201).send({
     status: "Category berhasil di delete",
   });
